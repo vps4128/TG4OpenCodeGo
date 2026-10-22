@@ -1,0 +1,22 @@
+services:
+  oc-tg:
+    build: .
+    image: oc-tg:latest
+    container_name: oc-tg
+    env_file: .env
+    restart: unless-stopped
+    init: true
+    volumes:
+      # 使用命名卷，避免宿主机目录属主与容器内 node 用户不一致。
+      # 如需直接查看 SQLite 文件，可改成 ./data:/app/data，
+      # 并先执行 mkdir -p data && chown 1000:1000 data。
+      - oc-tg-data:/app/data
+    healthcheck:
+      test: ["CMD", "node", "dist/healthcheck.js"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+volumes:
+  oc-tg-data:
