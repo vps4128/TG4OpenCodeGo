@@ -1,7 +1,9 @@
 services:
   oc-tg:
-    build: .
-    image: oc-tg:latest
+    # 镜像由 GitHub Actions 构建并推送到 GHCR。
+    # 私有镜像需要先 docker login ghcr.io；公开镜像可直接 pull。
+    # 本地临时构建：docker build -t ghcr.io/vps4128/oc-tg:latest .
+    image: ghcr.io/vps4128/oc-tg:latest
     container_name: oc-tg
     env_file: .env
     restart: unless-stopped

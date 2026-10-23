@@ -48,9 +48,12 @@ cp .env.example .env
 #   TELEGRAM_BOT_TOKEN=...
 #   OPENCODE_API_KEY=sk-...
 chmod 600 .env
-docker compose up -d --build
+docker compose pull
+docker compose up -d
 docker compose logs -f
 ```
+
+> 镜像由 GitHub Actions 构建并推送到 `ghcr.io/vps4128/oc-tg`。首次使用前请确认仓库的 Actions 已成功运行；如果镜像是私有的，先执行 `docker login ghcr.io`（见“镜像构建”）。
 
 ### 4. 绑定并查询
 
@@ -149,6 +152,13 @@ npm run healthcheck
 ## 部署
 
 ### Docker Compose（推荐）
+
+`docker-compose.yml` 直接使用 GHCR 上的镜像。更新版本：
+
+```bash
+docker compose pull
+docker compose up -d
+```
 
 数据保存在命名卷 `oc-tg-data` 中：
 
@@ -252,6 +262,44 @@ src/
 ├─ notifier.ts         Telegram 发送封装
 ├─ bot.ts              命令与按钮
 └─ healthcheck.ts      Docker 健康检查
+```
+
+## 镜像构建（GitHub Actions）
+
+每次 `git push`（任意分支或 tag），[.github/workflows/docker.yml](.github/workflows/docker.yml) 会：
+
+1. 安装依赖、类型检查、运行测试
+2. 构建 Docker 镜像
+3. 推送到 GitHub Container Registry：`ghcr.io/vps4128/oc-tg`
+
+镜像标签：
+
+- `latest`：`main` 分支最新构建
+- `<branch>`：对应分支的最新构建
+- `sha-<commit>`：按提交区分
+- `v1.2.3` 等：推送 `v*` 标签时生成
+
+PR 只构建、不推送。
+
+部署机器更新：
+
+```bash
+docker compose pull
+docker compose up -d
+```
+
+如果镜像/包是私有的，需要先登录 GHCR（PAT 勾选 `read:packages`）：
+
+```bash
+echo "$GHCR_TOKEN" | docker login ghcr.io -u vps4128 --password-stdin
+```
+
+也可以把镜像设为公开：GitHub → Packages → `oc-tg` → Package settings → Change visibility。
+
+本地开发直接 `npm run dev`；需要本地构建镜像时：
+
+```bash
+docker build -t ghcr.io/vps4128/oc-tg:latest .
 ```
 
 ## 安全说明
