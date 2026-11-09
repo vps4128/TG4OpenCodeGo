@@ -1,6 +1,8 @@
-# oc-tg
+# TG4OpenCodeGo
 
-通过 Telegram 查询 OpenCode Go 订阅用量，并定时主动推送。
+通过 Telegram 查询 OpenCode Go 订阅用量，并定时主动推送的机器人。
+
+> 仓库已从 `oc-tg` 更名为 `TG4OpenCodeGo`。容器名、数据卷、systemd 服务名等运行时标识仍沿用 `oc-tg`，以免影响已有部署。
 
 - 查询 5 小时滚动 / 每周 / 每月三个窗口的已用百分比和重置时间
 - 每天定时推送用量汇总，时间可自定义（支持多个时间点）
@@ -53,7 +55,7 @@ docker compose up -d
 docker compose logs -f
 ```
 
-> 镜像由 GitHub Actions 构建并推送到 `ghcr.io/vps4128/oc-tg`。首次使用前请确认仓库的 Actions 已成功运行；如果镜像是私有的，先执行 `docker login ghcr.io`（见“镜像构建”）。
+> 镜像由 GitHub Actions 构建并推送到 `ghcr.io/vps4128/tg4opencodego`。首次使用前请确认仓库的 Actions 已成功运行；如果镜像是私有的，先执行 `docker login ghcr.io`（见“镜像构建”）。
 
 ### 4. 绑定并查询
 
@@ -270,7 +272,7 @@ src/
 
 1. 安装依赖、类型检查、运行测试
 2. 构建 Docker 镜像
-3. 推送到 GitHub Container Registry：`ghcr.io/vps4128/oc-tg`
+3. 推送到 GitHub Container Registry：`ghcr.io/vps4128/tg4opencodego`
 
 镜像标签：
 
@@ -294,12 +296,12 @@ docker compose up -d
 echo "$GHCR_TOKEN" | docker login ghcr.io -u vps4128 --password-stdin
 ```
 
-也可以把镜像设为公开：GitHub → Packages → `oc-tg` → Package settings → Change visibility。
+也可以把镜像设为公开：GitHub → Packages → `tg4opencodego` → Package settings → Change visibility。
 
 本地开发直接 `npm run dev`；需要本地构建镜像时：
 
 ```bash
-docker build -t ghcr.io/vps4128/oc-tg:latest .
+docker build -t ghcr.io/vps4128/tg4opencodego:latest .
 ```
 
 ## 安全说明
