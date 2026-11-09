@@ -1,5 +1,7 @@
 # TG4OpenCodeGo
 
+[![Docker image](https://github.com/vps4128/TG4OpenCodeGo/actions/workflows/docker.yml/badge.svg)](https://github.com/vps4128/TG4OpenCodeGo/actions/workflows/docker.yml)
+
 通过 Telegram 查询 OpenCode Go 订阅用量，并定时主动推送的机器人。
 
 > 仓库已从 `oc-tg` 更名为 `TG4OpenCodeGo`。容器名、数据卷、systemd 服务名等运行时标识仍沿用 `oc-tg`，以免影响已有部署。
@@ -55,7 +57,7 @@ docker compose up -d
 docker compose logs -f
 ```
 
-> 镜像由 GitHub Actions 构建并推送到 `ghcr.io/vps4128/tg4opencodego`。首次使用前请确认仓库的 Actions 已成功运行；如果镜像是私有的，先执行 `docker login ghcr.io`（见“镜像构建”）。
+> 镜像由 GitHub Actions 构建并推送到 `ghcr.io/vps4128/tg4opencodego`，公开可拉取，无需登录。首次使用前请确认仓库的 Actions 已成功运行（见“镜像构建”）。
 
 ### 4. 绑定并查询
 
@@ -290,13 +292,7 @@ docker compose pull
 docker compose up -d
 ```
 
-如果镜像/包是私有的，需要先登录 GHCR（PAT 勾选 `read:packages`）：
-
-```bash
-echo "$GHCR_TOKEN" | docker login ghcr.io -u vps4128 --password-stdin
-```
-
-也可以把镜像设为公开：GitHub → Packages → `tg4opencodego` → Package settings → Change visibility。
+镜像和仓库都是公开的，部署时直接 `docker compose pull` 即可，不需要登录 GHCR。
 
 本地开发直接 `npm run dev`；需要本地构建镜像时：
 
