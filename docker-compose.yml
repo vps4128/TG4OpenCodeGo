@@ -1,10 +1,12 @@
+name: tg4opencodego
+
 services:
-  oc-tg:
+  tg4opencodego:
     # 镜像由 GitHub Actions 构建并推送到 GHCR。
-    # 私有镜像需要先 docker login ghcr.io；公开镜像可直接 pull。
+    # 镜像公开可拉取，无需登录。
     # 本地临时构建：docker build -t ghcr.io/vps4128/tg4opencodego:latest .
     image: ghcr.io/vps4128/tg4opencodego:latest
-    container_name: oc-tg
+    container_name: tg4opencodego
     env_file: .env
     restart: unless-stopped
     init: true
@@ -12,7 +14,7 @@ services:
       # 使用命名卷，避免宿主机目录属主与容器内 node 用户不一致。
       # 如需直接查看 SQLite 文件，可改成 ./data:/app/data，
       # 并先执行 mkdir -p data && chown 1000:1000 data。
-      - oc-tg-data:/app/data
+      - tg4opencodego-data:/app/data
     healthcheck:
       test: ["CMD", "node", "dist/healthcheck.js"]
       interval: 60s
@@ -21,4 +23,4 @@ services:
       start_period: 60s
 
 volumes:
-  oc-tg-data:
+  tg4opencodego-data:

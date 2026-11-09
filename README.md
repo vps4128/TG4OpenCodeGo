@@ -4,7 +4,7 @@
 
 通过 Telegram 查询 OpenCode Go 订阅用量，并定时主动推送的机器人。
 
-> 仓库已从 `oc-tg` 更名为 `TG4OpenCodeGo`。容器名、数据卷、systemd 服务名等运行时标识仍沿用 `oc-tg`，以免影响已有部署。
+> 项目原名 `oc-tg`，现统一更名为 `TG4OpenCodeGo`（镜像和运行时标识为 `tg4opencodego`）。
 
 - 查询 5 小时滚动 / 每周 / 每月三个窗口的已用百分比和重置时间
 - 每天定时推送用量汇总，时间可自定义（支持多个时间点）
@@ -128,7 +128,7 @@ npm run healthcheck
 | `DEFAULT_PUSH_TIMES` | `09:00` | 新聊天的默认推送时间 |
 | `CHECK_INTERVAL_MIN` | `15` | 用量轮询间隔（分钟，最小 5） |
 | `ALERT_THRESHOLDS` | `50,80,95,100` | 新聊天的默认阈值 |
-| `SQLITE_PATH` | `./data/oc-tg.db` | SQLite 文件路径 |
+| `SQLITE_PATH` | `./data/tg4opencodego.db` | SQLite 文件路径 |
 | `HEALTH_FILE` | 与 SQLite 同目录的 `heartbeat` | 用量拉取心跳文件 |
 | `TELEGRAM_HEALTH_FILE` | 与 SQLite 同目录的 `telegram-heartbeat` | 轮询心跳文件 |
 | `LOG_LEVEL` | `info` | pino 日志级别 |
@@ -164,17 +164,17 @@ docker compose pull
 docker compose up -d
 ```
 
-数据保存在命名卷 `oc-tg-data` 中：
+数据保存在命名卷 `tg4opencodego-data` 中：
 
 ```bash
-docker volume inspect oc-tg_oc-tg-data
+docker volume inspect tg4opencodego_tg4opencodego-data
 ```
 
 备份：
 
 ```bash
-docker run --rm -v oc-tg_oc-tg-data:/data -v "$PWD":/backup alpine \
-  tar czf /backup/oc-tg-data.tar.gz -C /data .
+docker run --rm -v tg4opencodego_tg4opencodego-data:/data -v "$PWD":/backup alpine \
+  tar czf /backup/tg4opencodego-data.tar.gz -C /data .
 ```
 
 如果希望直接访问 SQLite 文件，把 `docker-compose.yml` 中的卷改成 `./data:/app/data`，并先执行：
@@ -187,19 +187,19 @@ chown 1000:1000 data
 ### systemd
 
 ```bash
-sudo useradd --system --home /opt/oc-tg --shell /usr/sbin/nologin oc-tg
-sudo mkdir -p /opt/oc-tg
-sudo cp -r dist package.json package-lock.json deploy /opt/oc-tg/
-sudo cp .env /opt/oc-tg/.env
-sudo chown -R oc-tg:oc-tg /opt/oc-tg
-cd /opt/oc-tg && sudo -u oc-tg npm ci --omit=dev
-sudo cp deploy/oc-tg.service /etc/systemd/system/
+sudo useradd --system --home /opt/tg4opencodego --shell /usr/sbin/nologin tg4opencodego
+sudo mkdir -p /opt/tg4opencodego
+sudo cp -r dist package.json package-lock.json deploy /opt/tg4opencodego/
+sudo cp .env /opt/tg4opencodego/.env
+sudo chown -R tg4opencodego:tg4opencodego /opt/tg4opencodego
+cd /opt/tg4opencodego && sudo -u tg4opencodego npm ci --omit=dev
+sudo cp deploy/tg4opencodego.service /etc/systemd/system/
 sudo systemctl daemon-reload
-sudo systemctl enable --now oc-tg
-sudo journalctl -u oc-tg -f
+sudo systemctl enable --now tg4opencodego
+sudo journalctl -u tg4opencodego -f
 ```
 
-> `deploy/oc-tg.service` 中的 `/usr/bin/node` 需按实际 Node 路径调整（用 `which node` 查看）。
+> `deploy/tg4opencodego.service` 中的 `/usr/bin/node` 需按实际 Node 路径调整（用 `which node` 查看）。
 
 ## 常见问题
 
@@ -318,3 +318,7 @@ Authorization: Bearer <OpenCode Go API Key>
 ```
 
 返回三个窗口的 `status`、`percent` 和 `resetsAt`。该接口不提供分模型明细，因此本工具只展示三个窗口的汇总。
+
+## 许可证
+
+[MIT](LICENSE) © 2026 vps4128

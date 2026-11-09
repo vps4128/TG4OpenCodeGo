@@ -1,0 +1,19 @@
+[Unit]
+Description=TG4OpenCodeGo Telegram bot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/tg4opencodego
+EnvironmentFile=/opt/tg4opencodego/.env
+ExecStart=/usr/bin/node /opt/tg4opencodego/dist/index.js
+Restart=always
+RestartSec=5
+User=tg4opencodego
+Group=tg4opencodego
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

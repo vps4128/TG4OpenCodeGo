@@ -161,7 +161,7 @@ export class UsageClient {
         headers: {
           Authorization: `Bearer ${this.options.apiKey}`,
           Accept: 'application/json',
-          'User-Agent': 'oc-tg/1.0',
+          'User-Agent': 'tg4opencodego/1.0',
         },
         signal: AbortSignal.timeout(timeoutMs),
       });

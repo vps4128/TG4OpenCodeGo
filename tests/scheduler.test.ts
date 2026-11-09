@@ -18,8 +18,8 @@ const config: AppConfig = {
   checkIntervalMs: 900_000,
   alertThresholds: [50, 80],
   sqlitePath: ':memory:',
-  healthFile: '/tmp/oc-tg-scheduler-test.heartbeat',
-  telegramHealthFile: '/tmp/oc-tg-scheduler-test.telegram-heartbeat',
+  healthFile: '/tmp/tg4opencodego-scheduler-test.heartbeat',
+  telegramHealthFile: '/tmp/tg4opencodego-scheduler-test.telegram-heartbeat',
   logLevel: 'silent',
 };
 

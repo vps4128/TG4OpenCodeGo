@@ -9,7 +9,7 @@ import { loadDotEnv } from './config.js';
 function main(): void {
   loadDotEnv();
 
-  const sqlitePath = process.env.SQLITE_PATH ?? './data/oc-tg.db';
+  const sqlitePath = process.env.SQLITE_PATH ?? './data/tg4opencodego.db';
   const healthFile =
     process.env.HEALTH_FILE && process.env.HEALTH_FILE.trim() !== ''
       ? process.env.HEALTH_FILE

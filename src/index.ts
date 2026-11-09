@@ -81,7 +81,7 @@ async function main(): Promise<void> {
       defaultPushTimes: config.defaultPushTimes,
       thresholds: config.alertThresholds,
     },
-    'oc-tg starting',
+    'tg4opencodego starting',
   );
 
   try {
@@ -91,7 +91,7 @@ async function main(): Promise<void> {
   } finally {
     scheduler.stop();
     store.close();
-    logger.info('oc-tg stopped');
+    logger.info('tg4opencodego stopped');
   }
 }
 

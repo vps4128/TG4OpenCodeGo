@@ -8,7 +8,7 @@ import type { Notifier } from '../src/notifier.js';
 import { UsageClient } from '../src/opencode.js';
 import { UsageCoordinator } from '../src/usage-coordinator.js';
 
-const healthFile = path.join(os.tmpdir(), `oc-tg-test-${process.pid}.heartbeat`);
+const healthFile = path.join(os.tmpdir(), `tg4opencodego-test-${process.pid}.heartbeat`);
 
 function body(weekly: number) {
   return {

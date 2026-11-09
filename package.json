@@ -1,9 +1,10 @@
 {
-  "name": "oc-tg",
+  "name": "tg4opencodego",
   "version": "1.0.0",
   "private": true,
   "type": "module",
   "description": "Telegram bot for querying and pushing OpenCode Go usage",
+  "license": "MIT",
   "engines": {
     "node": ">=24"
   },

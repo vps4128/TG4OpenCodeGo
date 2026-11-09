@@ -44,7 +44,7 @@ const envSchema = z.object({
   DEFAULT_PUSH_TIMES: z.string().default('09:00'),
   CHECK_INTERVAL_MIN: z.coerce.number().int().min(5).max(1440).default(15),
   ALERT_THRESHOLDS: z.string().default('50,80,95,100'),
-  SQLITE_PATH: z.string().min(1).default('./data/oc-tg.db'),
+  SQLITE_PATH: z.string().min(1).default('./data/tg4opencodego.db'),
   HEALTH_FILE: z.string().optional(),
   TELEGRAM_HEALTH_FILE: z.string().optional(),
   LOG_LEVEL: z
